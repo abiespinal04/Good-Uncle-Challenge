@@ -10,7 +10,6 @@ import {
 } from '../types';
 
 export const addItem = item => dispatch => {
-    console.log('[item___]', item.productOptions[0].price)
   dispatch({
     type: ADD_ITEM_FETCH,
   });
@@ -20,11 +19,10 @@ export const addItem = item => dispatch => {
       payload: item,
     });
     dispatch({
-        type: ADD_PRICE_TOTAL,
-        price:Number(item.productOptions[0].price)
-      });
+      type: ADD_PRICE_TOTAL,
+      price: Number(item.productOptions[0].price),
+    });
   } catch (err) {
-    // Update error in reducer on failure
     dispatch({
       type: ADD_ITEM_FAILURE,
       error: err,
@@ -33,8 +31,7 @@ export const addItem = item => dispatch => {
 };
 
 export const deleteItem = itemData => dispatch => {
-  console.log("[itemData]", itemData.item[0].productOptions[0].price);
-  const { newItemList, item } = itemData;
+  const {newItemList} = itemData;
   dispatch({
     type: DELETE_ITEM_FETCH,
   });
@@ -43,12 +40,11 @@ export const deleteItem = itemData => dispatch => {
       type: DELETE_ITEM_SUCCESS,
       payload: newItemList,
     });
-      dispatch({
-        type: SUBTRACT_PRICE_TOTAL,
-        price:Number(itemData.item[0].productOptions[0].price)
-      });
+    dispatch({
+      type: SUBTRACT_PRICE_TOTAL,
+      price: Number(itemData.item[0].productOptions[0].price),
+    });
   } catch (err) {
-    // Update error in reducer on failure
     dispatch({
       type: DELETE_ITEM_FAILURE,
       error: err,

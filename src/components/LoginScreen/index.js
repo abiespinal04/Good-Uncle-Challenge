@@ -9,12 +9,12 @@ import {
   Dimensions,
   Animated,
   StyleSheet,
-  Platform
+  Platform,
 } from 'react-native';
 
 import {connect} from 'react-redux';
 
-const {width, height} = Dimensions.get('screen');
+const {width} = Dimensions.get('screen');
 const AnimatedTouchableOpacity = Animated.createAnimatedComponent(
   TouchableOpacity,
 );
@@ -26,11 +26,11 @@ class LoginScreen extends Component {
     phoneNumber: '',
     password: '',
     error: false,
+    invalidLogin: false,
   };
 
   componentDidMount() {
     const {animatedArrow} = this.state;
-    console.log('[hs]', this.props.userInfo);
     Animated.loop(
       Animated.sequence([
         Animated.delay(1000),
@@ -49,25 +49,34 @@ class LoginScreen extends Component {
   handleSubmit = () => {
     const {phoneNumber, password} = this.state;
     const {navigation, userInfo} = this.props;
-    console.log(navigation);
     /*Essentially the submit button for login would make an API call to verify if the phone number is in a database
     however in this case since i'm not communicating with a database, I first register the user and store the data in a reducer,
     if the password and number from this state matches the one in the reducer from the registration screen,
     then it will navigate you to the hom screen.
     */
-
     if (phoneNumber.trim() === '' || password.trim() === '') {
       this.setState({error: true});
+      return;
+    }
+
+    if (
+      phoneNumber.toLowerCase() !== userInfo.phoneNumber.toLowerCase() ||
+      password.toLowerCase() !== userInfo.password.toLowerCase()
+    ) {
+      this.setState({invalidLogin: true});
     }
     if (
       phoneNumber.toLowerCase() === userInfo.phoneNumber.toLowerCase() &&
-      password.toLowerCase() === userInfo.password.toLowerCase()
-      &&
-      phoneNumber.trim() !== ''
-      && password.trim() !== ''
+      password.toLowerCase() === userInfo.password.toLowerCase() &&
+      phoneNumber.trim() !== '' &&
+      password.trim() !== ''
     ) {
       this.setState(
-        {modalVisible: !this.state.modalVisible, phoneNumber: '', password: ''},
+        {
+          modalVisible: !this.state.modalVisible,
+          phoneNumber: '',
+          password: '',
+        },
         () => {
           navigation.navigate('Home');
         },
@@ -79,7 +88,7 @@ class LoginScreen extends Component {
     const {animatedArrow} = this.state;
     const interpolatedArrow = animatedArrow.interpolate({
       inputRange: [0, 1],
-      outputRange: [0, 40],
+      outputRange: [0, 30],
     });
 
     const arrowStyle = {
@@ -100,31 +109,26 @@ class LoginScreen extends Component {
             Alert.alert('Modal has been closed.');
           }}>
           <View style={styles.modalContainer}>
-            <View
-              style={{width: '100%', height: '100%', backgroundColor: 'white'}}>
+            <View style={styles.modalSubContainer}>
               <ScrollView
                 pagingEnabled={true}
                 ref={ref => (this.listView = ref)}
-                style={{
-                  backgroundColor: 'black',
-                  position: 'absolute',
-                  top: 100,
-                  zIndex: 1,
-                  height: 150,
-                  width: '100%',
-                }}
+                style={styles.scrollViewStyle}
                 contentContainerStyle={{alignItems: 'center'}}
                 horizontal={true}>
-                <View
-                  style={{
-                    width,
-                    height: 100,
-                    backgroundColor: '#f0f0f0',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                  }}>
+                <TouchableOpacity
+                  style={{marginTop: Platform.OS === 'android' ? 0 : 10}}
+                  onPress={() => this.props.navigation.navigate('UserAuth')}>
+                  <Text style={styles.goBackText}> Go Back </Text>
+                </TouchableOpacity>
+                <View style={styles.infoContainer}>
                   <View style={{flexDirection: 'column', width: 200}}>
-                    <Text style={{marginBottom:Platform.OS === 'android' ? 0: 10}}>Enter</Text>
+                    <Text
+                      style={{
+                        marginBottom: Platform.OS === 'android' ? 0 : 10,
+                      }}>
+                      Enter
+                    </Text>
                     <TextInput
                       placeholder="phone number"
                       keyboardType="numeric"
@@ -136,85 +140,33 @@ class LoginScreen extends Component {
                   </View>
                   <AnimatedTouchableOpacity
                     onPress={this.handleNextPage}
-                    style={[
-                      //   arrowStyle,
-                      {
-                        backgroundColor: 'black',
-                        width: 40,
-                        height: 40,
-                        alignSelf: 'flex-end',
-                        marginRight: 45,
-                        justifyContent: 'center',
-                        borderRadius: 20,
-                      },
-                    ]}>
-                    <Text
-                      style={{
-                        fontSize: 20,
-                        textAlign: 'center',
-                        color: '#f0f0f0',
-                      }}>
-                      >
-                    </Text>
+                    style={[arrowStyle, styles.arrowButton]}>
+                    <Text style={styles.arrowText}>></Text>
                   </AnimatedTouchableOpacity>
                 </View>
-                <View
-                  style={{
-                    width,
-                    height: 100,
-                    backgroundColor: '#f0f0f0',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                  }}>
+                <View style={styles.infoContainer}>
                   <View style={{flexDirection: 'column', width: 200}}>
-                    <Text style={{marginBottom: 10}}>Enter</Text>
+                    <Text style={{paddingTop: Platform.OS === 'ios' ? 10 : 10,}}>Enter</Text>
                     <TextInput
                       placeholder="password"
                       onChangeText={value => this.setState({password: value})}
                     />
                   </View>
                   {this.state.error ? (
-                    <Text
-                      style={{
-                        color: 'red',
-                        fontSize: 10,
-                        position: 'absolute',
-                        top: 70,
-                        alignSelf: 'center',
-                      }}>
+                    <Text style={styles.errorMessage}>
                       Don't leave any empty fields...
                     </Text>
                   ) : null}
+                  {this.state.invalidLogin ? (
+                    <Text style={styles.errorMessage}>Invalid Login</Text>
+                  ) : null}
                   <AnimatedTouchableOpacity
                     onPress={this.handleSubmit}
-                    style={[
-                      {
-                        backgroundColor: 'black',
-                        width: 40,
-                        height: 40,
-                        alignSelf: 'flex-end',
-                        marginRight: 45,
-                        justifyContent: 'center',
-                        borderRadius: 20,
-                      },
-                    ]}>
-                    <Text
-                      style={{
-                        fontSize: 15,
-                        textAlign: 'center',
-                        color: '#f0f0f0',
-                      }}>
-                      >
-                    </Text>
-                    {/* {this.state.error ? <Text style={{color:'red', fontSize:100}}>Don't leave any empty fields...</Text> : null} */}
+                    style={styles.arrowButton}>
+                    <Text style={styles.arrowText}>></Text>
                   </AnimatedTouchableOpacity>
                 </View>
               </ScrollView>
-              <TouchableOpacity
-                style={{marginTop:Platform.OS === 'android' ? 0: 10}}
-                onPress={() => this.props.navigation.navigate('UserAuth')}>
-                <Text> Go Back </Text>
-              </TouchableOpacity>
             </View>
           </View>
         </Modal>
@@ -228,9 +180,49 @@ const mapStateToProps = state => ({
 });
 
 const styles = StyleSheet.create({
-  modalContainer:{
-    marginTop:22
-  }
-})
+  modalContainer: {
+    marginTop: 22,
+  },
+  modalSubContainer: {width: '100%', height: '100%', backgroundColor: 'white'},
+  scrollViewStyle: {
+    backgroundColor: 'black',
+    position: 'absolute',
+    top: 100,
+    zIndex: 1,
+    height: 150,
+    width: '100%',
+  },
+  goBackText: {color: 'white'},
+  infoContainer: {
+    width,
+    height: 100,
+    backgroundColor: '#f0f0f0',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  arrowButton: {
+    backgroundColor: 'black',
+    width: 40,
+    height: 40,
+    alignSelf: 'flex-end',
+    marginRight: 95,
+    marginBottom:20,
+    justifyContent: 'center',
+    borderRadius: 20,
+  },
+  arrowText: {
+    fontSize: 20,
+    textAlign: 'center',
+    color: '#f0f0f0',
+  },
+  errorMessage: {
+    color: 'red',
+    fontSize: 10,
+    position: 'absolute',
+    top: 70,
+    left: 40,
+    alignSelf: 'center',
+  },
+});
 
 export default connect(mapStateToProps, null)(LoginScreen);

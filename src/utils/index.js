@@ -1,1 +1,2 @@
-export const customTruncate = (text, num) => text.length > num ? `${text.substring(0, num)}...` : text;
+export const customTruncate = (text, num) =>
+  text.length > num ? `${text.substring(0, num)}...` : text;

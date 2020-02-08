@@ -4,7 +4,7 @@ import {
   Text,
   TouchableOpacity,
   StyleSheet,
-  Dimensions
+  Dimensions,
 } from 'react-native';
 
 const {width, height} = Dimensions.get('screen');
@@ -12,12 +12,12 @@ const {width, height} = Dimensions.get('screen');
 class SignUp extends Component {
   state = {};
   render() {
-      const { navigation } = this.props;
+    const {navigation} = this.props;
     return (
       <View>
-        <TouchableOpacity 
-        onPress={() => navigation.navigate('Register')}
-        style={styles.signupButton}>
+        <TouchableOpacity
+          onPress={() => navigation.navigate('Register')}
+          style={styles.signupButton}>
           <Text style={styles.signupText}>Sign up</Text>
         </TouchableOpacity>
       </View>

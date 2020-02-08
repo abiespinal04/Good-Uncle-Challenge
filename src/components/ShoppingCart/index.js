@@ -1,5 +1,12 @@
 import React, {Component} from 'react';
-import {View, Text, TouchableOpacity, FlatList, Image} from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  FlatList,
+  Image,
+  StyleSheet,
+} from 'react-native';
 import {connect} from 'react-redux';
 import {deleteItem} from '../../redux/actions/itemActions';
 import SubTotal from '../SubTotal';
@@ -10,7 +17,6 @@ class ShoppingCart extends Component {
   };
   componentDidMount() {
     const {payload} = this.props.item;
-    console.log('[item_]', this.props.item);
     this.setState({item: payload});
   }
 
@@ -25,52 +31,58 @@ class ShoppingCart extends Component {
     const {deleteItem} = this.props;
     const indexOf = item.indexOf(itemData);
     const newItemList = item.filter((item, index) => index !== indexOf);
-    const data={
-        newItemList,
-        item
-    }
+    const data = {
+      newItemList,
+      item,
+    };
     deleteItem(data);
   };
   render() {
     const {item} = this.state;
     const {navigation} = this.props;
     return (
-      <View style={{flex: 1}}>
-              <SubTotal navigation={navigation}/>
+      <View style={styles.container}>
+        <SubTotal navigation={navigation} />
         {item.length > 0 ? (
           <FlatList
-          style={{marginTop:80}}
+            style={{marginTop: 80}}
             data={item}
             renderItem={({item}) => (
-              <View
-                style={{
-                  flexDirection: 'row',
-                  backgroundColor: 'black',
-                  height: 100,
-                  marginHorizontal: 10,
-                  marginVertical: 5,
-                  borderRadius: 20,
-                }}>
-                <Text style={{flex: 5, color: '#f0f0f0', margin: 10}}>
-                  {item.name}
-                </Text>
+              <View style={styles.subContainer}>
+                <Text style={styles.productName}>{item.name}</Text>
                 <TouchableOpacity
                   onPress={() => this.handleDeleteItem(item)}
                   style={{flex: 1, margin: 10}}>
-                  <Text style={{color: '#f0f0f0'}}>Delete</Text>
+                  <Text style={styles.deleteButton}>Delete</Text>
                 </TouchableOpacity>
               </View>
             )}
           />
         ) : (
-          <Image 
-          style={{resizeMode:'contain', width:"90%", alignSelf:'center'}}
-          source={require('../../assets/cart.png')} />
+          <Image
+            style={styles.emptyImage}
+            source={require('../../assets/cart.png')}
+          />
         )}
       </View>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  container: {flex: 1},
+  subContainer: {
+    flexDirection: 'row',
+    backgroundColor: 'black',
+    height: 100,
+    marginHorizontal: 10,
+    marginVertical: 5,
+    borderRadius: 20,
+  },
+  productName: {flex: 5, color: '#f0f0f0', margin: 10},
+  deleteButton: {color: '#f0f0f0'},
+  emptyImage: {resizeMode: 'contain', width: '90%', alignSelf: 'center'},
+});
 
 const mapStateToProps = state => ({
   item: state.item,

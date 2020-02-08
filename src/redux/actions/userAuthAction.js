@@ -8,21 +8,16 @@ import {
 } from '../types';
 export const userLogin = user => {
   return async dispatch => {
-    // Initiate loading state
     dispatch({
       type: USER_LOGIN_FETCH,
     });
     try {
-      // Call the API
       const result = await fetchSearchData(args.pageCount, args.itemsPerPage);
-      // Update payload in reducer on success
       dispatch({
         type: USER_LOGIN_SUCCESS,
         payload: result,
-        currentPage: args.pageCount,
       });
     } catch (err) {
-      // Update error in reducer on failure
       dispatch({
         type: USER_LOGIN_FAILURE,
         error: err,
@@ -31,25 +26,19 @@ export const userLogin = user => {
   };
 };
 
-export const userRegister = userData =>  dispatch => {
-    // console.log("[userData]", userData);
+export const userRegister = userData => dispatch => {
+  dispatch({
+    type: USER_REGISTER_FETCH,
+  });
+  try {
     dispatch({
-        type: USER_REGISTER_FETCH,
-      });
-      try {
-        // Call the API
-      //   const result = await fetchSearchData(args.pageCount, args.itemsPerPage);
-        // Update payload in reducer on success
-        dispatch({
-          type: USER_REGISTER_SUCCESS,
-          payload: userData,
-        });
-      } catch (err) {
-        // Update error in reducer on failure
-        dispatch({
-          type: USER_REGISTER_FAILURE,
-          error: err,
-        });
-      }
-  };
-
+      type: USER_REGISTER_SUCCESS,
+      payload: userData,
+    });
+  } catch (err) {
+    dispatch({
+      type: USER_REGISTER_FAILURE,
+      error: err,
+    });
+  }
+};
