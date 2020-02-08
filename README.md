@@ -15,3 +15,17 @@ git clone https://github.com/abiespinal04/Good-Uncle-Challenge.git
   1.if the above doesn't work for some reason, try open ios/Good-Uncle-Challenge.xcworkspace/
   
  7. react-native run-android
+ 
+ 
+ #### TROUBLE SHOOTING #### 
+ 1. Clean your project, cd ios and rm -rf Pods/
+ 
+ 2. rm -rf Podfile.lock
+ 
+ 3. cd .. and rm -rf node_modules
+ 
+ 4. delete the app from the simulator
+ 
+ 5. yarn or npm install then cd ios and pos install, then cd ..
+ 
+ 6. yarn start --reset-cache
