@@ -23,7 +23,12 @@ class RegisterScreen extends Component {
       password,
       phoneNumber,
     };
-    if (password.trim() !== '' && phoneNumber.trim() !== '') {
+    if (
+      password.trim() !== '' &&
+      phoneNumber.trim() !== '' &&
+      phoneNumber.length === 10 &&
+      password.length > 5
+    ) {
       userRegister(userData);
       navigation.navigate('Login');
     } else {
@@ -34,12 +39,8 @@ class RegisterScreen extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <View
-          style={styles.subContainer}>
-          <Text
-            style={styles.registrationTitle}>
-            Good uncle registration
-          </Text>
+        <View style={styles.subContainer}>
+          <Text style={styles.registrationTitle}>Good uncle registration</Text>
           <TextInput
             placeholderTextColor="#f0f0f0"
             placeholder="Phone number"
@@ -69,7 +70,7 @@ const styles = StyleSheet.create({
   container: {
     marginTop: 10,
   },
-  subContainer:{
+  subContainer: {
     height: 200,
     backgroundColor: 'black',
     marginHorizontal: 10,
@@ -95,13 +96,13 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     justifyContent: 'center',
   },
-  registrationTitle:{
+  registrationTitle: {
     textAlign: 'center',
     color: '#f0f0f0',
     fontSize: 20,
     letterSpacing: 2,
     marginTop: 10,
-  }
+  },
 });
 
 const mapSteToProps = state => ({

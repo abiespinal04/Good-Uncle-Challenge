@@ -11,7 +11,6 @@ import SignUp from '../SignUp';
 const {width} = Dimensions.get('screen');
 
 class Landing extends Component {
-  state = {};
   render() {
     const {navigation} = this.props;
     return (
