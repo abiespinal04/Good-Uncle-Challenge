@@ -9,7 +9,7 @@ import {createStackNavigator} from 'react-navigation-stack';
 
 import UserAuth from './src/components/UserAuth';
 import LoginScreen from './src/components/LoginScreen';
-import Home from './src/components/Home';
+import Home from './src/components/Tabbar';
 import ItemScreen from './src/components/ItemScreen';
 import RegisterScreen from './src/components/RegisterScreen';
 import ShoppingCartScreen from './src/components/ShoppingCart';
