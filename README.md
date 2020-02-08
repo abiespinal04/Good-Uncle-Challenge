@@ -29,3 +29,7 @@ git clone https://github.com/abiespinal04/Good-Uncle-Challenge.git
  5. yarn or npm install then cd ios and pod install, then cd ..
  
  6. yarn start --reset-cache
+
+ 7. react-native run-ios 
+
+ 8. react-native run-android
