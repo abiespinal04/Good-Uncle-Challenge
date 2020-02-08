@@ -39,11 +39,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     zIndex: 1,
     borderRadius: 100,
-    justifyContent: 'center',
-    shadowColor: 'black',
-    shadowOffset: {width: 2, height: 4},
-    shadowRadius: 10,
-    shadowOpacity: 0.4,
+    justifyContent: 'center'
   },
 });
 
