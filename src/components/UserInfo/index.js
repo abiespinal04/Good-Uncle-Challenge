@@ -9,7 +9,6 @@ import {
 const {width} = Dimensions.get('screen');
 
 class UserInfo extends Component {
-  state = {};
   render() {
     return (
       <View style={styles.container}>
