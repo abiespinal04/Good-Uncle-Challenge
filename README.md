@@ -26,6 +26,6 @@ git clone https://github.com/abiespinal04/Good-Uncle-Challenge.git
  
  4. delete the app from the simulator
  
- 5. yarn or npm install then cd ios and pos install, then cd ..
+ 5. yarn or npm install then cd ios and pod install, then cd ..
  
  6. yarn start --reset-cache
