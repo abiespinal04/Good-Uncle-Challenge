@@ -8,7 +8,8 @@ import {
   ScrollView,
   Dimensions,
   Animated,
-  StyleSheet
+  StyleSheet,
+  Platform
 } from 'react-native';
 
 import {connect} from 'react-redux';
@@ -123,7 +124,7 @@ class LoginScreen extends Component {
                     alignItems: 'center',
                   }}>
                   <View style={{flexDirection: 'column', width: 200}}>
-                    <Text style={{marginBottom: 10}}>Enter</Text>
+                    <Text style={{marginBottom:Platform.OS === 'android' ? 0: 10}}>Enter</Text>
                     <TextInput
                       placeholder="phone number"
                       keyboardType="numeric"
@@ -210,7 +211,7 @@ class LoginScreen extends Component {
                 </View>
               </ScrollView>
               <TouchableOpacity
-                style={{marginTop: 40}}
+                style={{marginTop:Platform.OS === 'android' ? 0: 10}}
                 onPress={() => this.props.navigation.navigate('UserAuth')}>
                 <Text> Go Back </Text>
               </TouchableOpacity>

@@ -9,7 +9,7 @@ class Home extends Component {
     mains: [],
   };
   componentDidMount() {
-    console.log('[data]', data);
+    console.log('[data]', data.digestData.mains);
     this.setState({mains: data.digestData.mains});
   }
 
@@ -34,10 +34,10 @@ class Home extends Component {
                 style={{backgroundColor:'black', marginVertical:3, height:100, marginHorizontal:3}}
                 >
                 <Text style={{color:'#f0f0f0', textAlign:'center', fontWeight:"bold", fontSize:25, marginBottom:10}}>
-                    {item.name}
+                {customTruncate(item.name,20 )}
                 </Text>
                 <Text style={{color:'#f0f0f0', textAlign:'center',  marginBottom:10}}>
-                {customTruncate(item.description,180 )}
+                {customTruncate(item.description,150 )}
                 </Text>
                 </TouchableOpacity>
             </View>

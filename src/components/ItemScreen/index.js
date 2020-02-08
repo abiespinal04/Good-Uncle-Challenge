@@ -20,7 +20,7 @@ class ItemScreen extends Component {
     componentDidMount(){
         const { navigation } = this.props;
         const itemData = navigation.getParam('itemData');
-        console.log('[item]', itemData);
+        console.log('[item]', itemData.productOptions);
         this.setState({itemData})
     }
 
@@ -44,8 +44,8 @@ class ItemScreen extends Component {
                 <Text>
                     {itemData.description}
                 </Text>
-                <Text>
-                    {itemData.price}
+                <Text style={{fontSize:20, fontWeight:'bold'}}>
+                   Price:  { itemData.productOptions && itemData.productOptions[0].price}
                 </Text>
                 <View>
                 </View>

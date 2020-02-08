@@ -5,8 +5,10 @@ import {
   DELETE_ITEM_FETCH,
   DELETE_ITEM_SUCCESS,
   DELETE_ITEM_FAILURE,
+  SUBTRACT_PRICE_TOTAL,
+  ADD_PRICE_TOTAL
 } from '../types';
-const initialState = {payload: [], isLoading: false, error: {}};
+const initialState = {payload: [], subTotal:0, isLoading: false, error: {}};
 
 export const itemReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -22,6 +24,13 @@ export const itemReducer = (state = initialState, action) => {
         payload: [...state.payload, {...action.payload}],
         isLoading: false,
       };
+      case ADD_PRICE_TOTAL:
+      console.log('[ADD_PRICE_TOTAL]', state.subTotal);
+      return {
+        ...state,
+        subTotal: state.subTotal + action.price,
+        isLoading: false,
+      };
     case ADD_ITEM_FAILURE:
       return {
         ...state,
@@ -34,12 +43,19 @@ export const itemReducer = (state = initialState, action) => {
         isLoading: true,
       };
     case DELETE_ITEM_SUCCESS:
-      console.log('[itemData_]', state.payload);
+      console.log('[itemData_]', state.subTotal);
       return {
         ...state,
         payload: [ ...action.payload],
         isLoading: false,
       };
+      case SUBTRACT_PRICE_TOTAL:
+        console.log('[SUBTRACT_PRICE_TOTAL]', action.price);
+        return {
+          ...state,
+          subTotal: state.subTotal - action.price,
+          isLoading: false,
+        };
     case DELETE_ITEM_FAILURE:
       return {
         ...state,

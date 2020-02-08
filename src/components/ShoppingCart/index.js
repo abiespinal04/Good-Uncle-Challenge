@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import {View, Text, TouchableOpacity, FlatList, Image} from 'react-native';
 import {connect} from 'react-redux';
 import {deleteItem} from '../../redux/actions/itemActions';
+import SubTotal from '../SubTotal';
+
 class ShoppingCart extends Component {
   state = {
     item: [],
@@ -23,14 +25,21 @@ class ShoppingCart extends Component {
     const {deleteItem} = this.props;
     const indexOf = item.indexOf(itemData);
     const newItemList = item.filter((item, index) => index !== indexOf);
-    deleteItem(newItemList);
+    const data={
+        newItemList,
+        item
+    }
+    deleteItem(data);
   };
   render() {
     const {item} = this.state;
+    const {navigation} = this.props;
     return (
       <View style={{flex: 1}}>
+              <SubTotal navigation={navigation}/>
         {item.length > 0 ? (
           <FlatList
+          style={{marginTop:80}}
             data={item}
             renderItem={({item}) => (
               <View

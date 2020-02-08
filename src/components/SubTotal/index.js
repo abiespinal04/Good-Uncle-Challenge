@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 
 class SubTotal extends Component {
   state = {
-    subTotal: {},
+    subTotal: '',
   };
 
   static getDerivedStateFromProps(nextProps, prevState) {
@@ -19,6 +19,7 @@ class SubTotal extends Component {
 
   render() {
     const {subTotal} = this.state;
+    console.log('[subTotal]', this.props.subTotal)
     return (
       <TouchableOpacity
       onPress={() => this.props.navigation.navigate('ShoppingCart')}
@@ -37,14 +38,14 @@ class SubTotal extends Component {
           shadowRadius:10,
           shadowOpacity:0.4
         }}>
-        <Text style={{textAlign: 'center'}}>SubTotal</Text>
+        <Text style={{textAlign: 'center'}}>{subTotal}</Text>
       </TouchableOpacity>
     );
   }
 }
 
 const mapStateToProps = state => ({
-  subTotal: state.subTotal,
+    subTotal: state.item.subTotal
 });
 
 export default connect(mapStateToProps, null)(SubTotal);
