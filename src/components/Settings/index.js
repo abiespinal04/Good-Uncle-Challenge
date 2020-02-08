@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { TouchableOpacity, View, Text, StyleSheet} from 'react-native';
-
+import SubTotal from '../SubTotal';
 
 
 class Settings extends Component {
@@ -8,6 +8,7 @@ class Settings extends Component {
         const {navigation} = this.props;
         return ( 
             <View style={styles.container}>
+                <SubTotal navigation={navigation}/>
                 <TouchableOpacity 
                 style={styles.logoutButton}
                 onPress={() => navigation.navigate('UserAuth')}

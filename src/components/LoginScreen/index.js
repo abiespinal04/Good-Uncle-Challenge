@@ -122,10 +122,10 @@ class LoginScreen extends Component {
                   <Text style={styles.goBackText}> Go Back </Text>
                 </TouchableOpacity>
                 <View style={styles.infoContainer}>
-                  <View style={{flexDirection: 'column', width: 200}}>
+                  <View style={{flexDirection: 'column', width: 200,  marginTop: Platform.OS === 'android' ? 30 : 0}}>
                     <Text
                       style={{
-                        marginBottom: Platform.OS === 'android' ? 0 : 10,
+                        marginBottom: Platform.OS === 'android' ? 0 : 0,
                       }}>
                       Enter
                     </Text>
@@ -145,7 +145,7 @@ class LoginScreen extends Component {
                   </AnimatedTouchableOpacity>
                 </View>
                 <View style={styles.infoContainer}>
-                  <View style={{flexDirection: 'column', width: 200}}>
+                <View style={{flexDirection: 'column', width: 200,  marginTop: Platform.OS === 'android' ? 30 : 0}}>
                     <Text style={{paddingTop: Platform.OS === 'ios' ? 10 : 10,}}>Enter</Text>
                     <TextInput
                       placeholder="password"
@@ -203,10 +203,10 @@ const styles = StyleSheet.create({
   arrowButton: {
     backgroundColor: 'black',
     width: 40,
-    height: 40,
+    height: 20,
     alignSelf: 'flex-end',
     marginRight: 95,
-    marginBottom:20,
+    marginBottom:40,
     justifyContent: 'center',
     borderRadius: 20,
   },
