@@ -27,7 +27,7 @@ class RegisterScreen extends Component {
       password.trim() !== '' &&
       phoneNumber.trim() !== '' &&
       phoneNumber.length === 10 &&
-      password.length > 6
+      password.length > 5
     ) {
       userRegister(userData);
       navigation.navigate('Login');

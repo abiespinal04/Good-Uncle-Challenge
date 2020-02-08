@@ -63,9 +63,6 @@ const TabScreens = createBottomTabNavigator({
           opacity: 0.6,
         },
         showIcon: false,
-        // headerStyle: {
-        //     backgroundColor: '#f4511e',
-        //   },
         style: {
           backgroundColor: 'black',
         },
